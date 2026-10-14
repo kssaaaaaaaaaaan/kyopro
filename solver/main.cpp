@@ -1,6 +1,7 @@
 // https://github.com/kssaaaaaaaaaaan/kyopro
 // https://github.com/ei1333/library/tree/dca071d33d8dbfd001e450a109c55eb6c38c2ee8
 #include <bits/stdc++.h>
+#include <atcoder/convolution.hpp>
 
 using namespace std;
 // なんか拾ったテンプレを貼っておく
@@ -9,6 +10,7 @@ using lll = __int128;
 using VI = vector<int>;
 using VLL = vector<ll>;
 using P = pair<int, int>;
+using PLL = pair<ll, ll>;
 #define REP(i, n) for (int i = 0; i < (int)(n); i++)
 #define FOR(i, a, b) for (ll i = a; i < (ll)(b); i++)
 #define ALL(a) (a).begin(), (a).end()
@@ -28,7 +30,7 @@ void print() { cout << '\n'; }
 template <typename T> void print(const T& t) { cout << t << '\n'; }
 
 template <> void print<double>(const double& t) {
-    cout << fixed << setprecision(10);
+    cout << fixed << setprecision(15);
     cout << t << '\n';
 }
 template <typename Head, typename... Tail>
@@ -54,42 +56,36 @@ template <typename T> istream& operator>>(istream& is, vector<T>& v) {
 }
 
 // 配列をprintで出力しようとするとCEになるので注意！！
-#include <atcoder/all>
+
 using namespace atcoder;
 typedef atcoder::modint998244353 mint;
 
 int main() {
     int N;
     cin >> N;
-
-    VI R(N - 1);
-    VI W(N - 1);
-    REP(i, N - 1) cin >> R[i];
-    REP(i, N - 1) cin >> W[i];
-    V<multiset<int>> s(N - 1);
-    REP(i, N - 1) {
-        REP(r, R[i]) { s[i + r].insert(W[i]); }
-    }
+    int A, B, C;
+    ll X;
+    cin >> A >> B >> C >> X;
+    int g = gcd(A, B);
+    A /= g, B /= g;
+    ll tX = X;
     ll ans = 0;
-    REP(i, N - 1) ans += *(s[i].begin());
-    int Q;
-    cin >> Q;
-    REP(q, Q) {
-        int c, r, w;
-        cin >> c >> r >> w;
-        c--;
-        REP(i, 5) {
-            if (c + i >= N - 1) break;
-            ans -= *(s[c + i].begin());
-        }
-        REP(i, R[c]) { s[c + i].erase(s[c + i].find(W[c])); }
-        REP(i, r) { s[c + i].insert(w); }
-        REP(i, 5) {
-            if (c + i >= N - 1) break;
-            ans += *(s[c + i].begin());
-        }
-        cout << ans << endl;
-        R[c] = r;
-        W[c] = w;
+    FOR(k, 1, N + 1) {
+        tX -= C;
+        if (tX < 0) break;
+        if (tX % g != 0) continue;
+        X = tX / g;
+        ll A_inv = internal::inv_gcd(A, B).second;
+        A_inv = ((lll)A_inv * X) % B;
+        if (A_inv > N) continue;
+        ll j0 = (X - A * A_inv) / B;
+        if (j0 <= 0) continue;
+        ll left = (j0 - N + A - 1) / A;
+        chmax(left, (1 - A_inv + B - 1) / B);
+        ll right = (j0 - 1) / A;
+        chmin(right, (N - A_inv) / B);
+        if (left > right) continue;
+        ans += right - left + 1;
     }
+    END(ans);
 }
