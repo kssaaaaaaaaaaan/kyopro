@@ -1,0 +1,26 @@
+# 拡張子のない実行ファイルを漏らさないよう、まず全部無視して必要なものだけ戻す
+*
+!*/
+!*.cpp
+!*.hpp
+!*.h
+!*.c
+!*.py
+!*.sh
+!*.md
+!*.toml
+!*.json
+!Makefile
+!.gitignore
+!.gitmodules
+!.clang-format
+!.clangd
+!LICENSE
+# ACL は拡張子のないヘッダ (atcoder/modint など) を含むので丸ごと戻す
+!ac-library/**
+!compat/**
+
+*.dSYM/
+.DS_Store
+verify/.verify-helper/cache/
+verify/.verify-helper/timestamps.local.json

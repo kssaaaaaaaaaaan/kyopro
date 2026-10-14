@@ -1,0 +1,90 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            // F5 用。開いているファイルの拡張子が .c なら gcc、それ以外なら g++ でビルドする
+            "type": "shell",
+            "label": "build active file",
+            "command": "if [ \"${fileExtname}\" = \".c\" ]; then /opt/homebrew/bin/gcc -std=c23 -g -Wall -Wextra -Wshadow \"${file}\" -o \"${fileDirname}/${fileBasenameNoExtension}\"; else /opt/homebrew/bin/g++ -std=c++23 -g -Wall -Wextra -Wshadow \"${file}\" -o \"${fileDirname}/${fileBasenameNoExtension}\" -I \"${workspaceFolder}/ac-library\" -I \"${workspaceFolder}/ei1333-library\"; fi",
+            "options": {
+                "cwd": "${fileDirname}/"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "gcc build active file",
+            "command": "/opt/homebrew/bin/gcc",
+            "args": [
+                "-std=c23",
+                "-g",
+                "-Wall",
+                "-Wextra",
+                "-Wshadow",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}/"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "/opt/homebrew/bin/g++",
+            "args": [
+                "-std=c++23",
+                //"-gdwarf-4",
+                "-g",
+                "-Wall",
+                "-Wextra",
+                "-Wshadow",
+                //"-fsanitize=address,undefined",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-I",
+                "${workspaceFolder}/ac-library",
+                "-I",
+                "${workspaceFolder}/ei1333-library"
+            ],
+            "options": {
+                "cwd": "${fileDirname}/",
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "CheckTestCase",
+            "type": "shell",
+            "command": "cd ${fileDirname}  && g++ -std=gnu++23 -O2 -I ${workspaceFolder}/ac-library -I \"${workspaceFolder}/ei1333-library\" ${fileBasename} -o ${fileBasenameNoExtension} && oj test -c \"${fileDirname}/${fileBasenameNoExtension}\" -d ${fileDirname}/tests/",
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+            }
+        },
+        {
+            "label": "SubmitCode",
+            "type": "shell",
+            "command": "cd ${fileDirname} && acc submit ${fileBasename} -- -l 4003",
+            "presentation": {
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+            },
+        },
+    ]
+}

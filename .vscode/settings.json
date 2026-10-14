@@ -1,0 +1,20 @@
+{
+    "clangd.arguments": [
+        "--query-driver=/opt/homebrew/bin/g++",
+        // 補完を確定したときに #include を勝手に挿さない
+        "--header-insertion=never"
+    ],
+    // .md はプレビューで開く。編集するときは右クリックの Reopen Editor With… から
+    // Text Editor を選ぶか、プレビュー上でダブルクリックして該当行に飛ぶ。
+    "workbench.editorAssociations": {
+        "*.md": "vscode.markdown.preview.editor"
+    },
+    "files.exclude": {
+        "**/*.dSYM": true,
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.c": "${capture}",
+        "*.cpp": "${capture}"
+    },
+}

@@ -1,0 +1,27 @@
+If:
+  PathMatch: '.*\.cpp'
+CompileFlags:
+  Add:
+    - -std=c++23
+    - -I/Users/super/kyopro/compat/
+    - -I/Users/super/kyopro/ac-library/
+    - "-I/Users/super/kyopro/ei1333-library/"
+    - -Wall
+    - -Wextra
+    - -Wno-unknown-pragmas
+    - -Wno-unused
+    - -Wno-unused-parameter
+    - -Wno-sign-compare
+
+---
+If:
+  PathMatch: '.*\.c'
+CompileFlags:
+  Add:
+    - -std=c23
+    - -Wall
+    - -Wextra
+    - -Wno-unknown-pragmas
+    - -Wno-unused
+    - -Wno-unused-parameter
+    - -Wno-sign-compare

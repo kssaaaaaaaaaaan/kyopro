@@ -1,0 +1,35 @@
+#pragma once
+#ifdef __clang__
+#include <string>
+
+namespace __gnu_cxx {
+
+template <typename CharT>
+class rope : public std::basic_string<CharT> {
+    using base = std::basic_string<CharT>;
+public:
+    using base::base;
+    rope() = default;
+    rope(const rope&) = default;
+    rope(rope&&) = default;
+    rope& operator=(const rope&) = default;
+    rope& operator=(rope&&) = default;
+
+    // substr は rope を返す必要があるため override
+    rope substr(size_t pos, size_t len = base::npos) const {
+        return rope(base::substr(pos, len));
+    }
+    rope operator+(const rope& rhs) const {
+        rope r = *this;
+        r += rhs;
+        return r;
+    }
+};
+
+using crope = rope<char>;
+
+} // namespace __gnu_cxx
+
+#else
+#include_next <ext/rope>
+#endif

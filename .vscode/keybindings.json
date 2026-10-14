@@ -1,0 +1,14 @@
+[
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.tasks.runTask",
+        "when": "editorTextFocus",
+        "args": "CheckTestCase"
+    },
+    {
+        "key": "ctrl+s",
+        "command": "workbench.action.tasks.runTask",
+        "when": "editorTextFocus",
+        "args": "SubmitCode"
+    }
+]
