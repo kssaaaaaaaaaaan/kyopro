@@ -4,7 +4,7 @@
 #include <atcoder/convolution.hpp>
 
 using namespace std;
-// なんか拾ったテンプレを貼っておく
+
 using ll = long long;
 using VI = vector<int>;
 using VLL = vector<ll>;

@@ -1,10 +1,10 @@
 // https://github.com/kssaaaaaaaaaaan/kyopro
 // https://github.com/ei1333/library
 #include <bits/stdc++.h>
-#include <atcoder/convolution.hpp>
+#include <atcoder/all>
 
 using namespace std;
-// なんか拾ったテンプレを貼っておく
+
 using ll = long long;
 using lll = __int128;
 using VI = vector<int>;
@@ -60,32 +60,64 @@ template <typename T> istream& operator>>(istream& is, vector<T>& v) {
 using namespace atcoder;
 typedef atcoder::modint998244353 mint;
 
+typedef pair<mint, mint> MP;
 int main() {
-    int N;
-    cin >> N;
-    int A, B, C;
-    ll X;
-    cin >> A >> B >> C >> X;
-    int g = gcd(A, B);
-    A /= g, B /= g;
-    ll tX = X;
-    ll ans = 0;
-    FOR(k, 1, N + 1) {
-        tX -= C;
-        if (tX < 0) break;
-        if (tX % g != 0) continue;
-        X = tX / g;
-        ll A_inv = internal::inv_gcd(A, B).second;
-        A_inv = ((lll)A_inv * X) % B;
-        if (A_inv > N) continue;
-        ll j0 = (X - A * A_inv) / B;
-        if (j0 <= 0) continue;
-        ll left = (j0 - N + A - 1) / A;
-        chmax(left, (1 - A_inv + B - 1) / B);
-        ll right = (j0 - 1) / A;
-        chmin(right, (N - A_inv) / B);
-        if (left > right) continue;
-        ans += right - left + 1;
+    string N;
+    int M;
+    cin >> N >> M;
+
+    VI C(M);
+    REP(i, M) cin >> C[i];
+    sort(ALL(C));
+    // V<mint> pow10(N.size() + 1, 1);
+    // REP(i, N.size()) pow10[i + 1] = pow10[i] * 10;
+    V<V<V<MP>>> dp(N.size() + 1, V<V<MP>>(1 << 10, V<MP>(2, {0, 0})));
+
+    REP(k, 10) {
+        if (k > (N[0] - '0')) break;
+        if (k == (N[0] - '0')) {
+            dp[1][(1 << k)][1].first += k;
+            dp[1][(1 << k)][1].second = 1;
+        } else {
+            dp[1][(1 << k)][0].first += k;
+            if (k != 0)
+                dp[1][(1 << k)][0].second = 1;
+            else
+                dp[1][0][0].second = 1;
+        }
     }
-    END(ans);
+    FOR(i, 1, N.size()) {
+        REP(j, 1 << 10) {
+            REP(k, 10) {
+                if (j != 0 || k != 0) {
+                    dp[i + 1][j | (1 << k)][0].first +=
+                        dp[i][j][0].first * 10 + k * dp[i][j][0].second;
+                    dp[i + 1][j | (1 << k)][0].second += dp[i][j][0].second;
+                } else {
+                    ovi dp[i + 1][0][0].first +=
+                        dp[i][0][0].first * 10 + k * dp[i][j][0].second;
+                    dp[i + 1][0][0].second += dp[i][j][0].second;
+                }
+                if (k > (N[i] - '0')) continue;
+                if (k == (N[i] - '0')) {
+                    dp[i + 1][j | (1 << k)][1].first +=
+                        dp[i][j][1].first * 10 + k * dp[i][j][1].second;
+                    dp[i + 1][j | (1 << k)][1].second += dp[i][j][1].second;
+                } else {
+                    dp[i + 1][j | (1 << k)][0].first +=
+                        dp[i][j][1].first * 10 + k * dp[i][j][1].second;
+                    dp[i + 1][j | (1 << k)][0].second += dp[i][j][1].second;
+                }
+            }
+        }
+    }
+    int mask = 0;
+    REP(i, M) mask += 1 << C[i];
+    mint ans = 0;
+    REP(i, 1 << 10) {
+        if ((i & mask) != mask) continue;
+        ans += dp[N.size()][i][0].first;
+        ans += dp[N.size()][i][1].first;
+    }
+    END(ans.val());
 }

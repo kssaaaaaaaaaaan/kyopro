@@ -5,7 +5,7 @@
 #include <functional>
 #include <queue>
 using namespace std;
-// なんか拾ったテンプレを貼っておく
+
 using ll = long long;
 using lll = __int128;
 using VI = vector<int>;

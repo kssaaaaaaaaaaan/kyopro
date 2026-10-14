@@ -4,7 +4,7 @@
 #include <atcoder/convolution.hpp>
 
 using namespace std;
-// なんか拾ったテンプレを貼っておく
+
 using ll = long long;
 using lll = __int128;
 using VI = vector<int>;
@@ -61,19 +61,28 @@ using namespace atcoder;
 typedef atcoder::modint998244353 mint;
 
 int main() {
-    ll N, A, B, C;
-    ll X;
-    cin >> N >> A >> B >> C >> X;
-    ll cnt = 0;
-    FOR(i, 1, N + 1) {
-        FOR(j, 1, N + 1) {
-            ll tmp = X - A * i - B * j;
-            if (tmp % C != 0) continue;
-            if (1 <= tmp / C && tmp / C <= N) {
-                cnt++;
-                // cerr << i << " " << j << " " << tmp / C << endl;
-            }
+    int N;
+    cin >> N;
+    int M;
+    cin >> M;
+    VI C(M);
+    REP(i, M) cin >> C[i];
+    sort(ALL(C));
+    mint ans = 0;
+    int mask = 0;
+    REP(i, M) mask += 1 << C[i];
+
+    REP(i, N + 1) {
+        int tmp = i;
+        int check = 0;
+        while (tmp != 0) {
+            int k = tmp % 10;
+            tmp /= 10;
+            check = check | (1 << k);
         }
+        if ((mask & check) != mask) continue;
+        cerr << i << endl;
+        ans += i;
     }
-    END(cnt);
+    END(ans.val());
 }
