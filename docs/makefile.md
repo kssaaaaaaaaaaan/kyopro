@@ -1,18 +1,17 @@
 ---
-title: Makefile (ビルドと提出と検証)
+title: Makefile (ビルドと提出)
 documentation_of: //Makefile
 ---
 
-リポジトリ直下の `Makefile` は、競技プログラミングで繰り返す 3 つの作業をまとめたものである。
-コンパイルと、提出用の 1 ファイル化と、Library Checker での検証である。
+リポジトリ直下の `Makefile` は、競技プログラミングで繰り返す 2 つの作業をまとめたものである。
+コンパイルと、提出用の 1 ファイル化である。
 
 ## 変数
 
-対象を切り替えるのは次の 3 つである。
+対象を切り替えるのは次の 2 つである。
 
 - **SRC**：対象のソースファイル。既定は `main.cpp`。
 - **OUT**：`make submit` の出力先。既定は `SRC` の拡張子を `.submit.cpp` に替えたもの。
-- **T**：`make verify` で 1 つだけ実行したいテストの名前。既定は空で、その場合は全部を実行する。
 
 コンパイラと include パスは次の 3 つで決まっており、普段は触らない。
 
@@ -84,20 +83,6 @@ make submit SRC=ABC/A.cpp OUT=/tmp/x.cpp
 出力には `#line` 行が挟まる。
 提出には影響しないが、コンパイルエラーの行番号が元ファイルの番号で報告されるようになる。
 
-### verify
-
-`verify/` に移ってから `oj-verify run` を実行する。
-`T` を渡すとそのテストだけを実行する。
-
-```
-make verify
-make verify T=inv_of_formal_power_series
-```
-
-`verify/` に移るのは、`oj-verify` がカレントディレクトリ以下の `*.test.cpp` をすべて拾うからである。
-リポジトリ直下で実行すると、`ei1333-library` に入っている本家のテストまで実行してしまう。
-`verify/test/` のテストは、本家のヘッダに ACL の modint を渡す使い方を確かめるものである。
-
 ### clean
 
 `OUT` と `build` が作った実行ファイルを消す。
@@ -129,12 +114,9 @@ AtCoder 側に `math/fps/formal-power-series-friendly-ntt.hpp` は無く、コ�
 
 ## 前提になるコマンド
 
-`make submit` は `oj-bundle` を、`make verify` は `oj-verify` を使う。
-どちらも online-judge-verify-helper に入っている。
+`make submit` は `oj-bundle` を使う。
+`oj-bundle` は online-judge-verify-helper に入っている。
 
 ```
 pipx install online-judge-verify-helper
-pipx inject online-judge-verify-helper "setuptools<81" --force
 ```
-
-2 行目が要るのは、`oj-verify` が `pkg_resources` を使っており、setuptools 81 以降では起動しないからである。

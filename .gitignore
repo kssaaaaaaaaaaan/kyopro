@@ -22,5 +22,5 @@
 
 *.dSYM/
 .DS_Store
-verify/.verify-helper/cache/
-verify/.verify-helper/timestamps.local.json
+# make submit の生成物
+*.submit.cpp
