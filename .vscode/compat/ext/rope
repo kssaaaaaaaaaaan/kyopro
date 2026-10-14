@@ -1,6 +1,7 @@
 #pragma once
 #ifdef __clang__
 #include <string>
+#include <utility>
 
 namespace __gnu_cxx {
 
@@ -14,6 +15,9 @@ public:
     rope(rope&&) = default;
     rope& operator=(const rope&) = default;
     rope& operator=(rope&&) = default;
+    // 継承コンストラクタは基底のコピー/ムーブを含まないので、basic_string からの変換を別に置く
+    rope(const base& s) : base(s) {}
+    rope(base&& s) : base(std::move(s)) {}
 
     // substr は rope を返す必要があるため override
     rope substr(size_t pos, size_t len = base::npos) const {

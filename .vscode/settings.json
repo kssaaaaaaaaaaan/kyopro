@@ -11,6 +11,9 @@
     },
     "files.exclude": {
         "**/*.dSYM": true,
+        // clang-format と clangd は親ディレクトリを遡って探すので直下から動かせない。見えないようにだけする
+        ".clang-format": true,
+        ".clangd": true,
     },
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
