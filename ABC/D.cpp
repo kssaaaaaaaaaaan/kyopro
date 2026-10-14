@@ -1,10 +1,16 @@
 // https://github.com/kssaaaaaaaaaaan/kyopro
 // https://github.com/ei1333/library
 #include <bits/stdc++.h>
+#include <atcoder/all>
 
-#include <functional>
-#include <queue>
 using namespace std;
+
+namespace atcoder {
+template <class T, internal::is_modint_t<T>* = nullptr>
+ostream& operator<<(ostream& os, const T& x) {
+    return os << x.val();
+}
+}  // namespace atcoder
 
 using ll = long long;
 using lll = __int128;
@@ -27,23 +33,6 @@ template <typename T1, typename T2> inline bool chmax(T1& a, T2 b) {
 template <typename T1, typename T2> inline bool chmin(T1& a, T2 b) {
     return a > b && (a = b, true);
 }
-void print() { cout << '\n'; }
-template <typename T> void print(const T& t) { cout << t << '\n'; }
-
-template <> void print<double>(const double& t) {
-    cout << fixed << setprecision(10);
-    cout << t << '\n';
-}
-template <typename Head, typename... Tail>
-void print(const Head& head, const Tail&... tail) {
-    cout << head << ' ';
-    print(tail...);
-}
-#define END(...)            \
-    {                       \
-        print(__VA_ARGS__); \
-        return 0;           \
-    }
 template <typename T> ostream& operator<<(ostream& os, const vector<T>& v) {
     for (int i = 0; i < (int)v.size(); i++) {
         os << v[i] << (i + 1 != (int)v.size() ? " " : "");
@@ -56,10 +45,27 @@ template <typename T> istream& operator>>(istream& is, vector<T>& v) {
     return is;
 }
 
-// 配列をprintで出力しようとするとCEになるので注意！！
-#include <atcoder/all>
+void print() { cout << '\n'; }
+template <typename T> void print(const T& t) { cout << t << '\n'; }
+
+template <> void print<double>(const double& t) {
+    cout << fixed << setprecision(15);
+    cout << t << '\n';
+}
+template <typename Head, typename... Tail>
+void print(const Head& head, const Tail&... tail) {
+    cout << head << ' ';
+    print(tail...);
+}
+#define END(...)            \
+    {                       \
+        print(__VA_ARGS__); \
+        return 0;           \
+    }
+
 using namespace atcoder;
 typedef atcoder::modint998244353 mint;
+
 // PBDSを使うためのヘッダーと名前空間
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>

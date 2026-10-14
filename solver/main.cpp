@@ -5,6 +5,13 @@
 
 using namespace std;
 
+namespace atcoder {
+template <class T, internal::is_modint_t<T>* = nullptr>
+ostream& operator<<(ostream& os, const T& x) {
+    return os << x.val();
+}
+}  // namespace atcoder
+
 using ll = long long;
 using lll = __int128;
 using VI = vector<int>;
@@ -26,6 +33,18 @@ template <typename T1, typename T2> inline bool chmax(T1& a, T2 b) {
 template <typename T1, typename T2> inline bool chmin(T1& a, T2 b) {
     return a > b && (a = b, true);
 }
+template <typename T> ostream& operator<<(ostream& os, const vector<T>& v) {
+    for (int i = 0; i < (int)v.size(); i++) {
+        os << v[i] << (i + 1 != (int)v.size() ? " " : "");
+    }
+    return os;
+}
+
+template <typename T> istream& operator>>(istream& is, vector<T>& v) {
+    for (T& in : v) is >> in;
+    return is;
+}
+
 void print() { cout << '\n'; }
 template <typename T> void print(const T& t) { cout << t << '\n'; }
 
@@ -43,24 +62,11 @@ void print(const Head& head, const Tail&... tail) {
         print(__VA_ARGS__); \
         return 0;           \
     }
-template <typename T> ostream& operator<<(ostream& os, const vector<T>& v) {
-    for (int i = 0; i < (int)v.size(); i++) {
-        os << v[i] << (i + 1 != (int)v.size() ? " " : "");
-    }
-    return os;
-}
-
-template <typename T> istream& operator>>(istream& is, vector<T>& v) {
-    for (T& in : v) is >> in;
-    return is;
-}
-
-// 配列をprintで出力しようとするとCEになるので注意！！
 
 using namespace atcoder;
 typedef atcoder::modint998244353 mint;
-
 typedef pair<mint, mint> MP;
+
 int main() {
     string N;
     int M;
@@ -94,7 +100,7 @@ int main() {
                         dp[i][j][0].first * 10 + k * dp[i][j][0].second;
                     dp[i + 1][j | (1 << k)][0].second += dp[i][j][0].second;
                 } else {
-                    ovi dp[i + 1][0][0].first +=
+                    dp[i + 1][0][0].first +=
                         dp[i][0][0].first * 10 + k * dp[i][j][0].second;
                     dp[i + 1][0][0].second += dp[i][j][0].second;
                 }
@@ -119,5 +125,5 @@ int main() {
         ans += dp[N.size()][i][0].first;
         ans += dp[N.size()][i][1].first;
     }
-    END(ans.val());
+    END(ans);
 }
