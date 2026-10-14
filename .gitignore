@@ -18,7 +18,7 @@
 !LICENSE
 # ACL は拡張子のないヘッダ (atcoder/modint など) を含むので丸ごと戻す
 !ac-library/**
-!compat/**
+!.vscode/compat/**
 
 *.dSYM/
 .DS_Store

@@ -3,7 +3,7 @@ If:
 CompileFlags:
   Add:
     - -std=c++23
-    - -I/Users/super/kyopro/compat/
+    - -I/Users/super/kyopro/.vscode/compat/
     - -I/Users/super/kyopro/ac-library/
     - "-I/Users/super/kyopro/ei1333-library/"
     - -Wall

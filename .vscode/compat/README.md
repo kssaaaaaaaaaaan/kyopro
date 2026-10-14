@@ -1,8 +1,8 @@
-# compat/
+# .vscode/compat/
 
 clangd（Clang）でも GCC 専用ヘッダを静的チェックできるようにするための互換シム置き場。
 
-`.clangd` に `-I/Users/super/kyopro/compat/` を追加してあるため、`#include <bits/stdc++.h>` や `#include <ext/pb_ds/...>` はここのファイルが優先して読まれる。
+`.clangd` に `-I/Users/super/kyopro/.vscode/compat/` を追加してあるため、`#include <bits/stdc++.h>` や `#include <ext/pb_ds/...>` はここのファイルが優先して読まれる。
 
 ## 仕組み
 
