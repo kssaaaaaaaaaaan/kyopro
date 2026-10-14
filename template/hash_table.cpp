@@ -1,5 +1,5 @@
 // https://github.com/kssaaaaaaaaaaan/kyopro
-// https://github.com/ei1333/library/tree/dca071d33d8dbfd001e450a109c55eb6c38c2ee8
+// https://github.com/ei1333/library
 // pb_ds hash table テンプレート
 // cc_hash_table: チェイン法。unordered_map より高速なことが多い
 // gp_hash_table: オープンアドレス法。find が最速だが erase 不可

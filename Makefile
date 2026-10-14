@@ -1,6 +1,6 @@
 # 競プロ用の補助ターゲット。
-#   make            … main.cpp をビルドする
-#   make submit     … main.cpp を ACL ごと 1 ファイルに展開して main.submit.cpp を作る
+#   make            … solver/main.cpp をビルドする
+#   make submit     … solver/main.cpp を ACL ごと 1 ファイルに展開して solver/main.submit.cpp を作る
 #
 # SRC は上書きできる。コンテストのディレクトリでは SRC だけ渡せばよい。
 #   make build  SRC=ABC/A.cpp    … ABC/A を作る
@@ -13,7 +13,7 @@ ACL      := ac-library
 CXX      := g++
 CXXFLAGS := -std=gnu++20 -O2 -Wall -Wextra -Wno-sign-compare -I"$(ACL)" -I"$(LIB)"
 
-SRC ?= main.cpp
+SRC ?= solver/main.cpp
 # OUT を指定しなければ、SRC の隣に <名前>.submit.cpp を作る。
 # 例: SRC=ABC/A.cpp なら ABC/A.submit.cpp
 OUT ?= $(SRC:.cpp=.submit.cpp)

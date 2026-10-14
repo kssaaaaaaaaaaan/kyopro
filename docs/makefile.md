@@ -10,7 +10,7 @@ documentation_of: //Makefile
 
 対象を切り替えるのは次の 2 つである。
 
-- **SRC**：対象のソースファイル。既定は `main.cpp`。
+- **SRC**：対象のソースファイル。既定は `solver/main.cpp`。
 - **OUT**：`make submit` の出力先。既定は `SRC` の拡張子を `.submit.cpp` に替えたもの。
 
 コンパイラと include パスは次の 3 つで決まっており、普段は触らない。
@@ -25,9 +25,9 @@ documentation_of: //Makefile
 ## ライブラリ
 
 `ei1333-library` は、ei1333/library（Luzhiled's Library）を無改変のまま git submodule として置いたものである。
-参照しているのはコミット `dca071d33d8dbfd001e450a109c55eb6c38c2ee8`（2026-08-23）である。
+参照しているのはコミット `088b4c8b49f85194099305d998e7113dc3d5dd2e`（2026-10-01）である。
 更新するときは `git -C ei1333-library pull` のあと `git add ei1333-library` してコミットし、参照するコミットを進める。
-その際は、各 .cpp の先頭にある ei1333/library の URL のコミットハッシュも書き換える。
+各 .cpp の先頭にはリポジトリ本体の URL だけを書いており、どのコミットを使ったかは submodule が記録するので、更新のときに .cpp を書き換える必要はない。
 新しい環境で clone するときは `git clone --recursive` を使うか、clone 後に `git submodule update --init` を実行する。
 使い方の説明は本家の `docs/` にある。
 
@@ -58,7 +58,7 @@ auto g = f.sqrt(n, get_sqrt);
 引数なしの `make` はこれを実行する。
 
 ```
-make                          # main.cpp → ./main
+make                          # solver/main.cpp → solver/main
 make build SRC=ABC/A.cpp      # ABC/A.cpp → ABC/A
 ```
 
@@ -70,7 +70,7 @@ make build SRC=ABC/A.cpp      # ABC/A.cpp → ABC/A
 
 ```
 make submit SRC=ABC/A.cpp     # → ABC/A.submit.cpp
-make submit                   # → main.submit.cpp
+make submit                   # → solver/main.submit.cpp
 make submit SRC=ABC/A.cpp OUT=/tmp/x.cpp
 ```
 
@@ -86,7 +86,7 @@ make submit SRC=ABC/A.cpp OUT=/tmp/x.cpp
 ### clean
 
 `OUT` と `build` が作った実行ファイルを消す。
-`SRC` を渡さなければ `main.cpp` に対応するものが対象になる。
+`SRC` を渡さなければ `solver/main.cpp` に対応するものが対象になる。
 
 ```
 make clean SRC=ABC/A.cpp      # ABC/A.submit.cpp と ABC/A を消す

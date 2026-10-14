@@ -1,5 +1,5 @@
 // https://github.com/kssaaaaaaaaaaan/kyopro
-// https://github.com/ei1333/library/tree/dca071d33d8dbfd001e450a109c55eb6c38c2ee8
+// https://github.com/ei1333/library
 // =====================================================================
 //  ACL lazy_segtree テンプレート（区間更新・区間取得）
 //  g++ -std=c++17 -I ac-library で確認済み（AtCoder なら -I 不要）
